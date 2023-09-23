@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='assets/css/main/app.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='assets/css/main/app-dark.css')}}">
+
+    <title>Eduwall Superapps</title>
+</head>
+
+<body id="body">
+
+    <head>
+        <h1>Admin Login</h1>
+    </head>
+
+    <main id="main">
+        <section>
+            <article>
+                <form hx-post="/handle_admin_login" hx-trigger="click from:#admin_login_submit_button"
+                    hx-target="#body">
+                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+
+                    <input type="text" name="username" id="username" placeholder="username" required>
+                    <input type="password" name="password" id="password" placeholder="password" required>
+                    <button type="submit" id="admin_login_submit_button">Login</button>
+                </form>
+            </article>
+        </section>
+    </main>
+
+</body>
+<!-- htmx script -->
+<script src="https://unpkg.com/htmx.org@1.9.5"></script>
+
+<script src="{{url_for('static', filename='assets/js/bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='assets/js/app.js')}}"></script>
+
+</html>

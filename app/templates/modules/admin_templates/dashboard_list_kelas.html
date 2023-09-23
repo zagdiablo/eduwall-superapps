@@ -1,0 +1,54 @@
+<ul>
+    {% for kelas in all_kelas %}
+    <li>
+        {{kelas.kode_kelas}}
+        <!-- button triggur untuk kelas delete modal -->
+        <button type="button" class="btn btn-outline-primary block" data-bs-toggle="modal"
+            data-bs-target="#dashboard_delete_kelas{{kelas.id}}" id="dashboard_delete_kelas{{kelas.id}}_button">
+            Hapus
+        </button>
+
+        <!-- kelas delete modal -->
+        <div class="modal fade" id="dashboard_delete_kelas{{kelas.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="dashboard_delete_kelas{{kelas.id}}Title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="dashboard_delete_kelas{{kelas.id}}Title">Hapus Kelas
+                        </h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Apakah anda yankin ingin menghapus kelas {{kelas.kode_kelas}}?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Batal</span>
+                        </button>
+                        <form hx-trigger="click from:#dashboard_hapus_kelas_button" hx-post="/handle_delete_kelas"
+                            hx-target="#dashboard_list_kelas">
+                            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="to_delete_kelas_id" value="{{kelas.id}}">
+
+                            <button type="submit" class="btn btn-danger ml-1" data-bs-dismiss="modal"
+                                id="dahsboard_hapus_kelas_button">
+                                <i class="bx bx-check d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Hapus</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- kelas delete modal end -->
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Modals -->

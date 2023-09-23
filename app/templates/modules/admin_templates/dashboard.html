@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='assets/css/main/app.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='assets/css/main/app-dark.css')}}">
+
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <h1>Hello, {{username}}</h1>
+    <a href="/admin_logout">Logout</a>
+
+    <div id="dashboard_list_kelas" hx-trigger="load" hx-get="/get_data_kelas" hx-target="#dashboard_list_kelas">
+        <!-- trigger by form tambah kelas -->
+    </div>
+
+    <h3>Tambah kelas:</h3>
+    <form hx-post="/handle_tambah_kelas" hx-trigger="click from:#tambah_kelas_button" hx-target="#dashboard_list_kelas">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+
+        <input type="text" name="kode_kelas" placeholder="Kode Kelas">
+
+        <button id="tambah_kelas_button" type="submit">Tambah Kelas</button>
+    </form>
+</body>
+<!-- htmx script -->
+<script src="https://unpkg.com/htmx.org@1.9.5"></script>
+
+<script src="{{url_for('static', filename='assets/js/bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='assets/js/app.js')}}"></script>
+
+</html>
