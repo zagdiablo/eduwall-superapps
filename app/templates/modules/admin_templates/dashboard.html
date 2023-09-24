@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="{{url_for('static', filename='assets/css/main/app.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/css/main/app-dark.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='assets/css/animation/animation.css')}}">
 
     <title>Admin Dashboard</title>
 </head>
@@ -15,18 +16,64 @@
     <h1>Hello, {{username}}</h1>
     <a href="/admin_logout">Logout</a>
 
-    <div id="dashboard_list_kelas" hx-trigger="load" hx-get="/get_data_kelas" hx-target="#dashboard_list_kelas">
-        <!-- trigger by form tambah kelas -->
+    <div style="border: 1px black solid;">
+        <div id="dashboard_list_kelas" hx-trigger="load" hx-get="/get_data_kelas" hx-target="#dashboard_list_kelas"
+            hx-swapt="transition:true">
+            <!-- trigger by form tambah kelas -->
+        </div>
+
+        <h3>Tambah kelas:</h3>
+        <form hx-post="/handle_tambah_kelas" hx-trigger="click from:#tambah_kelas_button"
+            hx-target="#dashboard_list_kelas">
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+
+            <input type="text" name="kode_kelas" placeholder="Kode Kelas" required>
+
+            <button id="tambah_kelas_button" type="submit">Tambah Kelas</button>
+        </form>
     </div>
 
-    <h3>Tambah kelas:</h3>
-    <form hx-post="/handle_tambah_kelas" hx-trigger="click from:#tambah_kelas_button" hx-target="#dashboard_list_kelas">
-        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+    <div style="border: 1px black solid;">
+        <div id="dashboard_list_dosen" hx-trigger="load" hx-get="/get_data_dosen" hx-target="#dashboard_list_dosen"
+            hx-swapt="transition:true">
+            <!-- trigger by form tambah dosen -->
+        </div>
 
-        <input type="text" name="kode_kelas" placeholder="Kode Kelas">
+        <h3>Tambah dosen:</h3>
+        <form hx-post="/handle_tambah_dosen" hx-trigger="click from:#tambah_dosen_button"
+            hx-target="#dashboard_list_dosen">
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
 
-        <button id="tambah_kelas_button" type="submit">Tambah Kelas</button>
-    </form>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="nama_depan" placeholder="Nama Depan" required>
+            <input type="text" name="nama_belakang" placeholder="Nama Belakang" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="re-password" placeholder="Konfirmasi Password" required>
+
+            <button id="tambah_dosen_button" type="button">Tambah dosen</button>
+        </form>
+    </div>
+
+    <div style="border: 1px black solid;">
+        <div id="dashboard_list_mahasiswa" hx-trigger="load" hx-get="/get_data_mahasiswa"
+            hx-target="#dashboard_list_mahasiswa" hx-swapt="transition:true">
+            <!-- trigger by form tambah mahasiswa -->
+        </div>
+
+        <h3>Tambah mahasiswa:</h3>
+        <form hx-post="/handle_tambah_mahasiswa" hx-trigger="click from:#tambah_mahasiswa_button"
+            hx-target="#dashboard_list_mahasiswa">
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="nama_depan" placeholder="Nama Depan" required>
+            <input type="text" name="nama_belakang" placeholder="Nama Belakang" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="re-password" placeholder="Konfirmasi Password" required>
+
+            <button id="tambah_mahasiswa_button" type="button">Tambah mahasiswa</button>
+        </form>
+    </div>
 </body>
 <!-- htmx script -->
 <script src="https://unpkg.com/htmx.org@1.9.5"></script>

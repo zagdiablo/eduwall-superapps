@@ -23,9 +23,13 @@ def create_app():
     # daftar blueprint views pada web application
     from .public_views import public_views
     from .admin_views import admin_views
+    from .dosen_views import dosen_views
+    from .mahasiswa_views import mahasiswa_views
 
+    app.register_blueprint(dosen_views, url_prefix="/")
     app.register_blueprint(admin_views, url_prefix="/")
     app.register_blueprint(public_views, url_prefix="/")
+    app.register_blueprint(mahasiswa_views, url_prefix='/')
 
     # user loader
     from .models import User

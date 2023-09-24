@@ -1,0 +1,132 @@
+<ul hx-swap="innerHTML transition:true">
+    {% for dosen in all_dosen %}
+    <li class="scale-out-center" hx-swap="innerHTML transition:true">
+        {{dosen.username}} {{dosen.nama_depan}} {{dosen.nama_belakang}}
+        <!-- button trigger untuk dosen delete modal -->
+        <button type="button" class="btn btn-outline-primary block" data-bs-toggle="modal"
+            data-bs-target="#dashboard_delete_dosen{{dosen.id}}" id="dashboard_delete_dosen{{dosen.id}}_button">
+            Hapus
+        </button>
+
+        <!-- dosen delete modal -->
+        <div class="modal fade" id="dashboard_delete_dosen{{dosen.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="dashboard_delete_dosen{{dosen.id}}Title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title white" id="dashboard_delete_dosen{{dosen.id}}Title">Hapus dosen
+                        </h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Apakah anda yankin ingin menghapus dosen {{dosen.nama_depan}} {{dosen.nama_belakang}}?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal"
+                            hx-target="#dashboard_list_dosen">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Batal</span>
+                        </button>
+
+                        <form hx-trigger="click from:#dashboard_delete_dosen{{dosen.id}}_button_modal"
+                            hx-post="/handle_delete_dosen">
+                            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="to_delete_dosen_id" value="{{dosen.id}}">
+
+                            <button type="button" class="btn btn-danger ml-1" data-bs-dismiss="modal"
+                                id="dashboard_delete_dosen{{dosen.id}}_button_modal">
+                                <i class="bx bx-check d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Hapus</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- dosen delete modal end -->
+
+        <!-- Button trigger for edit dosen modal -->
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+            data-bs-target="#dashboard_edit_dosen{{dosen.id}}">
+            Edit
+        </button>
+
+        <!--edit dosen Modal -->
+        <div class="modal fade text-left" id="dashboard_edit_dosen{{dosen.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel33" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel33">Edit Dosen</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    <form hx-trigger="click from:#dashboard_edit_dosen{{dosen.id}}_button_modal"
+                        hx-post="/handle_edit_dosen">
+                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                        <input type="hidden" name="to_edit_dosen_id" value="{{dosen.id}}">
+
+                        <div class="modal-body">
+                            <label>Username: </label>
+                            <div class="form-group">
+                                <input type="text" placeholder="Username" class="form-control" name="dosen_username"
+                                    value="{{dosen.username}}">
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <label>Nama depan: </label>
+                            <div class="form-group">
+                                <input type="text" placeholder="Nama Depan" class="form-control" name="dosen_nama_depan"
+                                    value="{{dosen.nama_depan}}">
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <label>Nama belakang: </label>
+                            <div class="form-group">
+                                <input type="text" placeholder="Nama Belakang" class="form-control"
+                                    name="dosen_nama_belakang" value="{{dosen.nama_belakang}}">
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <label>Password: </label>
+                            <div class="form-group">
+                                <input type="password" placeholder="Ganti Password" class="form-control"
+                                    name="dosen_password">
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <label>Konfirmasi Password: </label>
+                            <div class="form-group">
+                                <input type="password" placeholder="Konfirmasi Password" class="form-control"
+                                    name="re_dosen_password">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                <i class="bx bx-x d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Batal</span>
+                            </button>
+
+                            <button type="button" class="btn btn-danger ml-1" data-bs-dismiss="modal"
+                                id="dashboard_edit_dosen{{dosen.id}}_button_modal">
+                                <i class="bx bx-check d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Simpan</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- edit dosen modal end -->
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Modals -->

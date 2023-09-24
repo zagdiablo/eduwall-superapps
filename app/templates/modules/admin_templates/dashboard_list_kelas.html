@@ -1,6 +1,6 @@
-<ul>
+<ul hx-swap="innerHTML transition:true">
     {% for kelas in all_kelas %}
-    <li>
+    <li class="scale-out-center" hx-swap="innerHTML transition:true">
         {{kelas.kode_kelas}}
         <!-- button triggur untuk kelas delete modal -->
         <button type="button" class="btn btn-outline-primary block" data-bs-toggle="modal"
@@ -14,8 +14,8 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
                 role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="dashboard_delete_kelas{{kelas.id}}Title">Hapus Kelas
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title white" id="dashboard_delete_kelas{{kelas.id}}Title">Hapus Kelas
                         </h5>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <i data-feather="x"></i>
@@ -27,17 +27,18 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal"
+                            hx-target="#dashboard_list_kelas">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Batal</span>
                         </button>
-                        <form hx-trigger="click from:#dashboard_hapus_kelas_button" hx-post="/handle_delete_kelas"
-                            hx-target="#dashboard_list_kelas">
+                        <form hx-trigger="click from:#dashboard_delete_kelas{{kelas.id}}_button_modal"
+                            hx-post="/handle_delete_kelas">
                             <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
                             <input type="hidden" name="to_delete_kelas_id" value="{{kelas.id}}">
 
-                            <button type="submit" class="btn btn-danger ml-1" data-bs-dismiss="modal"
-                                id="dahsboard_hapus_kelas_button">
+                            <button type="button" class="btn btn-danger ml-1" data-bs-dismiss="modal"
+                                id="dashboard_delete_kelas{{kelas.id}}_button_modal">
                                 <i class="bx bx-check d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Hapus</span>
                             </button>
@@ -47,6 +48,53 @@
             </div>
         </div>
         <!-- kelas delete modal end -->
+
+        <!-- Button trigger for edit kelas modal -->
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+            data-bs-target="#dashboard_edit_kelas{{kelas.id}}">
+            Edit
+        </button>
+
+        <!--edit kelas Modal -->
+        <div class="modal fade text-left" id="dashboard_edit_kelas{{kelas.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel33" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel33">Login Form </h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    <form hx-trigger="click from:#dashboard_edit_kelas{{kelas.id}}_button_modal"
+                        hx-post="/handle_edit_kelas">
+                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                        <input type="hidden" name="to_edit_kelas_id" value="{{kelas.id}}">
+
+                        <div class="modal-body">
+                            <label>Kode kelas: </label>
+                            <div class="form-group">
+                                <input type="text" placeholder="Kode Kelas" class="form-control"
+                                    name="to_edit_kode_kelas" value="{{kelas.kode_kelas}}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                <i class="bx bx-x d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Batal</span>
+                            </button>
+
+                            <button type="button" class="btn btn-danger ml-1" data-bs-dismiss="modal"
+                                id="dashboard_edit_kelas{{kelas.id}}_button_modal">
+                                <i class="bx bx-check d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Simpan</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- edit kelas modal end -->
     </li>
     {% endfor %}
 </ul>
